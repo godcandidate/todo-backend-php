@@ -1,0 +1,48 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Dependencies
+vendor/
+node_modules/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment files
+# Allow .env.example to be copied
+
+# Test files
+phpunit.xml
+tests/
+
+# Docker files
+Dockerfile
+docker-compose.yml
+*.dockerfile
+.dockerignore
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Cache and temporary files
+*.cache
+*.tmp
+.phpunit.result.cache
+
+# Documentation
+*.md
+LICENSE
+docs/
+
+# Build artifacts
+build/
+dist/
+coverage/
