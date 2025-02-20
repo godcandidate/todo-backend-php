@@ -16,6 +16,7 @@ node_modules/
 
 # Environment files
 # Allow .env.example to be copied
+.env
 
 # Test files
 phpunit.xml

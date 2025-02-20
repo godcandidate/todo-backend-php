@@ -10,9 +10,14 @@ header('Content-Type: application/json');
 // Include Composer's autoloader
 require __DIR__ . '/../vendor/autoload.php';
 
-// Load environment variables
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+// Define the path to the .env file
+$dotenvPath = __DIR__ . '/../.env';
+
+// Check if the .env file exists and load it only if it does
+if (file_exists($dotenvPath)) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
+}
 
 // Initialize database connection
 $dbConfig = require __DIR__ . '/../src/config/database.php';
