@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+    environment:
+      DB_HOST: host.docker.internal
+      DB_NAME: ${DB_NAME:-tododb}
+      DB_USER: ${DB_USER:-todouser}
+      DB_PASSWORD: ${DB_PASSWORD:-todopass123}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
