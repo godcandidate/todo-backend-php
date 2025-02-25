@@ -36,17 +36,19 @@ try {
     // Select the database
     $pdo->exec("USE " . $dbConfig['dbname']);
     
-    // Define project root directory and SQL file path
-    $projectRoot = realpath(__DIR__ . '/..');
-    $sqlFilePath = $projectRoot . '/database.sql';
-    if (!file_exists($sqlFilePath)) {
-        throw new \RuntimeException('Database schema file not found: ' . $sqlFilePath);
-    }
-    $sqlFile = file_get_contents($sqlFilePath);
-    if ($sqlFile === false) {
-        throw new \RuntimeException('Could not read database schema file');
-    }
-    $pdo->exec($sqlFile);
+    // Create the todos table if it doesn't exist
+    $schema = "CREATE TABLE IF NOT EXISTS todos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        priority VARCHAR(50),
+        category VARCHAR(100),
+        date DATE,
+        active BOOLEAN DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )";
+    $pdo->exec($schema);
     
 } catch (\PDOException $e) {
     http_response_code(500);
