@@ -36,8 +36,16 @@ try {
     // Select the database
     $pdo->exec("USE " . $dbConfig['dbname']);
     
-    // Create tables if they don't exist
-    $sqlFile = file_get_contents(__DIR__ . '/../database.sql');
+    // Define project root directory and SQL file path
+    $projectRoot = realpath(__DIR__ . '/..');
+    $sqlFilePath = $projectRoot . '/database.sql';
+    if (!file_exists($sqlFilePath)) {
+        throw new \RuntimeException('Database schema file not found: ' . $sqlFilePath);
+    }
+    $sqlFile = file_get_contents($sqlFilePath);
+    if ($sqlFile === false) {
+        throw new \RuntimeException('Could not read database schema file');
+    }
     $pdo->exec($sqlFile);
     
 } catch (\PDOException $e) {
