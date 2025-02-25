@@ -22,12 +22,24 @@ if (file_exists($dotenvPath)) {
 // Initialize database connection
 $dbConfig = require __DIR__ . '/../src/config/database.php';
 try {
+    // First connect without database selection
     $pdo = new PDO(
-        "mysql:host=" . $dbConfig['host'] . ";dbname=" . $dbConfig['dbname'] . ";charset=" . $dbConfig['charset'],
+        "mysql:host=" . $dbConfig['host'] . ";charset=" . $dbConfig['charset'],
         $dbConfig['username'],
         $dbConfig['password']
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Create database if it doesn't exist
+    $pdo->exec("CREATE DATABASE IF NOT EXISTS " . $dbConfig['dbname']);
+    
+    // Select the database
+    $pdo->exec("USE " . $dbConfig['dbname']);
+    
+    // Create tables if they don't exist
+    $sqlFile = file_get_contents(__DIR__ . '/../database.sql');
+    $pdo->exec($sqlFile);
+    
 } catch (\PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]);
