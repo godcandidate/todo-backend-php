@@ -19,7 +19,7 @@ if (file_exists($dotenvPath)) {
     $dotenv->load();
 }
 
-// Initialize database connection
+//Initialize database connection
 $dbConfig = require __DIR__ . '/../src/config/database.php';
 try {
     // First connect without database selection
