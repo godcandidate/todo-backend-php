@@ -24,7 +24,7 @@ docker compose up --build
 
 The application will be available at `http://localhost:8081`
 
-## Environment Variables
+## Environment Variable
 
 The following environment variables are required:
 
